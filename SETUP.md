@@ -78,7 +78,7 @@ docker-compose up -d
 ### Docker Environment Variables
 - **Backend**: Uses port 5001 inside containers
 - **Frontend**: Uses `http://backend:5001` to connect to backend in Docker network
-- **External Access**: Backend available on `localhost:5001`, Frontend on `localhost:3000`
+- **External Access**: Backend available on `localhost:5002`, Frontend on `localhost:3001`
 
 ### Docker Services
 - **Backend**: Node.js server with MongoDB and Redis connections
@@ -87,6 +87,6 @@ docker-compose up -d
 - **Redis**: Caching service
 
 ### Docker Troubleshooting
-- Ensure Docker is running and ports 5001, 3000, 27017, 6379 are available
+- Ensure Docker is running and ports 5002, 3001, 27018, 6380 are available
 - Use `docker-compose logs` to check service logs
 - Use `docker-compose down -v` to clean up volumes if needed
