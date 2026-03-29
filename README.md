@@ -20,7 +20,6 @@ _I'd love for you to make the most of this project - it's all about learning, he
 
 The Wanderlust project follows a modern DevOps lifecycle, ensuring code quality, security, and automated deployments.
 
-### 🔄 Animated CI/CD Pipeline Flow
 
 ![Wanderlust Project Workflow](./workflow-animation.svg)
 
