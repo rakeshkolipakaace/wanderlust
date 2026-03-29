@@ -16,6 +16,47 @@ At its core, this project embodies two important aims:
 
 _I'd love for you to make the most of this project - it's all about learning, helping, and growing in the open-source world._
 
+## 🛠️ Project Workflow & CI/CD Architecture
+
+The Wanderlust project follows a modern DevOps lifecycle, ensuring code quality, security, and automated deployments.
+
+### 🔄 CI/CD Pipeline Flow
+
+```mermaid
+graph TD
+    A[Developer Commit] -->|Push| B[GitHub Repository]
+    B -->|Webhook| C[Jenkins CI/CD Pipeline]
+    
+    subgraph "Quality & Security Gates"
+        C --> D[SonarQube Scan]
+        D --> E[OWASP Dependency Check]
+        E --> F[Trivy Security Scan]
+    end
+    
+    F --> G{Checks Passed?}
+    G -->|Yes| H[Docker Compose Build]
+    G -->|No| I[Pipeline Fail & Notify]
+    
+    H --> J[Deploy Containers]
+    
+    subgraph "Production Environment"
+        J --> K[Frontend - Port 3001]
+        J --> L[Backend - Port 5002]
+        L --> M[(MongoDB)]
+        L --> N[(Redis Cache)]
+    end
+```
+
+### 🚀 Workflow Steps:
+1.  **Code Commit**: Developers push changes to the GitHub repository.
+2.  **Jenkins Trigger**: Jenkins automatically detects changes and starts the build.
+3.  **SonarQube Security**: Static analysis checks for code smells, bugs, and security vulnerabilities.
+4.  **Security Scanning**: 
+    - **OWASP**: Scans for known vulnerabilities in third-party dependencies.
+    - **Trivy**: Performs a deep scan of the filesystem and Docker images for OS-level vulnerabilities.
+5.  **Automated Build**: Docker Compose builds fresh, optimized images for both the Frontend and Backend.
+6.  **Containerized Deployment**: The application is deployed as a multi-container stack, isolated and scalable.
+
 ## Setting up the project locally
 
 ### Setting up the Backend
