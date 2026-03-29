@@ -30,6 +30,11 @@ app.get('/', (req, res) => {
   res.send('Yay!! Backend of wanderlust app is now accessible');
 });
 
+// Health check endpoint for Docker
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy', timestamp: new Date().toISOString() });
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
