@@ -19,6 +19,24 @@ type FormData = {
 };
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
+  const [networkStatus, setNetworkStatus] = useState<'checking' | 'connected' | 'error'>('checking');
+
+  // Check network connectivity on component mount
+  useEffect(() => {
+    const checkNetworkConnectivity = async () => {
+      try {
+        const response = await axios.get(import.meta.env.VITE_API_PATH + '/api/posts', { timeout: 5000 });
+        if (response.status === 200) {
+          setNetworkStatus('connected');
+        }
+      } catch (err) {
+        console.error('Network check failed:', err);
+        setNetworkStatus('error');
+      }
+    };
+
+    checkNetworkConnectivity();
+  }, []);
 
   const handleImageSelect = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -97,7 +115,15 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
+        const apiUrl = import.meta.env.VITE_API_PATH + '/api/posts/';
+        console.log('Attempting to connect to:', apiUrl);
+
+        const response = await axios.post(apiUrl, formData, {
+          timeout: 10000, // 10 second timeout
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
 
         if (response.status === 200) {
           toast.success('Blog post successfully created!');
@@ -106,7 +132,15 @@ function AddBlog() {
           toast.error('Error: ' + response.data.message);
         }
       } catch (err: any) {
-        toast.error('Error: ' + err.message);
+        console.error('Post creation error:', err);
+
+        if (err.code === 'ECONNREFUSED' || err.code === 'NETWORK_ERROR') {
+          toast.error('Network error: Unable to connect to backend. Please check if the backend service is running.');
+        } else if (err.code === 'ECONNABORTED') {
+          toast.error('Request timeout: Backend took too long to respond. Please try again.');
+        } else {
+          toast.error('Error: ' + (err.response?.data?.message || err.message));
+        }
       }
     }
   };
@@ -139,6 +173,29 @@ function AddBlog() {
       </div>
       <div className="flex justify-center">
         <form onSubmit={handleSubmit} className="md:w-5/6 lg:w-2/3">
+          {/* Network Status Indicator */}
+          <div className="mb-4 p-3 rounded-lg bg-slate-100 dark:bg-dark-card">
+            <div className="flex items-center">
+              <span className="text-sm font-medium text-light-secondary dark:text-dark-secondary">
+                Backend Status:
+              </span>
+              {networkStatus === 'checking' && (
+                <span className="ml-2 text-sm text-yellow-600">Checking...</span>
+              )}
+              {networkStatus === 'connected' && (
+                <span className="ml-2 text-sm text-green-600">✓ Connected</span>
+              )}
+              {networkStatus === 'error' && (
+                <span className="ml-2 text-sm text-red-600">✗ Connection Error</span>
+              )}
+            </div>
+            {networkStatus === 'error' && (
+              <div className="mt-2 text-xs text-red-600">
+                Unable to connect to backend. Please check if the backend service is running at {import.meta.env.VITE_API_PATH}
+              </div>
+            )}
+          </div>
+
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
