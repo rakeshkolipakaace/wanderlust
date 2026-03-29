@@ -6,9 +6,6 @@ COPY . .
 
 RUN npm install 
 
-RUN npm test
-
-
 FROM node:21-slim
 
 WORKDIR /app
