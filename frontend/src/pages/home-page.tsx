@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getApiUrl } from '@/lib/api-client';
 import { useEffect, useState } from 'react';
 import BlogFeed from '@/components/blog-feed';
 import PostCard from '@/components/post-card';
@@ -10,7 +11,7 @@ function HomePage() {
 
   useEffect(() => {
     axios
-      .get(import.meta.env.VITE_API_PATH + '/api/posts')
+      .get(getApiUrl('/api/posts'))
       .then((response) => {
         setPosts(response.data);
       })

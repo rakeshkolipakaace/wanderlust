@@ -49,7 +49,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_PATH=http://backend:5001
+        - VITE_API_PATH=http://localhost:5002
     ports:
       - "3001:80"
     depends_on:

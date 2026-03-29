@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getApiUrl } from '@/lib/api-client';
 import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -25,7 +26,7 @@ function AddBlog() {
   useEffect(() => {
     const checkNetworkConnectivity = async () => {
       try {
-        const response = await axios.get(import.meta.env.VITE_API_PATH + '/api/posts', { timeout: 5000 });
+        const response = await axios.get(getApiUrl('/api/posts'), { timeout: 5000 });
         if (response.status === 200) {
           setNetworkStatus('connected');
         }
@@ -115,11 +116,11 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
+        const response = await axios.post(getApiUrl('/api/posts/'), formData, {
           timeout: 10000, // 10 second timeout
           headers: {
-            'Content-Type': 'application/json'
-          }
+            'Content-Type': 'application/json',
+          },
         });
 
         if (response.status === 200) {
@@ -131,8 +132,10 @@ function AddBlog() {
       } catch (err: any) {
         console.error('Post creation error:', err);
 
-        if (err.code === 'ECONNREFUSED' || err.code === 'NETWORK_ERROR') {
-          toast.error('Network error: Unable to connect to backend. Please check if the backend service is running.');
+        if (err.code === 'ECONNREFUSED' || err.code === 'NETWORK_ERROR' || err.message === 'Network Error') {
+          toast.error(
+            `Network error: Unable to connect to backend at ${getApiUrl('/api/posts/')}. Please check if the backend service is running.`
+          );
         } else if (err.code === 'ECONNABORTED') {
           toast.error('Request timeout: Backend took too long to respond. Please try again.');
         } else {
@@ -188,7 +191,7 @@ function AddBlog() {
             </div>
             {networkStatus === 'error' && (
               <div className="mt-2 text-xs text-red-600">
-                Unable to connect to backend. Please check if the backend service is running at {import.meta.env.VITE_API_PATH}
+                Unable to connect to backend. Please check if the backend service is running at {getApiUrl('')}
               </div>
             )}
           </div>
