@@ -22,7 +22,16 @@ The Wanderlust project follows a modern DevOps lifecycle, ensuring code quality,
 
 ### 🔄 Animated CI/CD Pipeline Flow
 
-![Wanderlust Project Workflow](./workflow-animation.svg)
+<p align="center">
+  <img src="./workflow-animation.svg" alt="Wanderlust Project Workflow" width="100%">
+</p>
+
+**Icon Legend:**
+- **Code Brackets**: Development & Commit
+- **GitHub Octocat**: GitHub Repository
+- **Jenkins Butler**: Jenkins Automation & Build
+- **Docker Whale**: Containerization & Packaging
+- **Globe**: Live Deployment
 
 ### 🚀 Workflow Steps:
 1.  **Code Commit**: Developers push changes to the GitHub repository.
