@@ -22,7 +22,7 @@ pipeline{
         }
         stage("Owasp Dependency Check"){
             steps{
-             dependencyCheck additionalArguments: '--scan ./', odcIntallation: 'dc'
+             dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'dc'
              dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
 
             }
