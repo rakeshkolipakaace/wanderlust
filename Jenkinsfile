@@ -6,16 +6,9 @@ pipeline{
       // Jenkins credential ID
     }
     stages{
-        stage("check code"){
-            steps{
-              git branch: 'main',
-                    url: 'https://github.com/rakeshkolipakaace/wanderlust.git',
-                    credentialsId: 'github-creds'
-            }
-        }
         stage("sonar scan"){
             steps{
-                withSonarQubeEnv('Sonar') {
+                withSonarQubeEnv('SonarQube') {
                     sh "${SONAR_HOME}/bin/sonar-scanner  -Dsonar.projectName=wanderlust -Dsonar.projectKey=wanderlust"
                 }
             }
