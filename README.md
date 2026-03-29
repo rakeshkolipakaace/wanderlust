@@ -20,32 +20,9 @@ _I'd love for you to make the most of this project - it's all about learning, he
 
 The Wanderlust project follows a modern DevOps lifecycle, ensuring code quality, security, and automated deployments.
 
-### 🔄 CI/CD Pipeline Flow
+### 🔄 Animated CI/CD Pipeline Flow
 
-```mermaid
-graph TD
-    A[Developer Commit] -->|Push| B[GitHub Repository]
-    B -->|Webhook| C[Jenkins CI/CD Pipeline]
-    
-    subgraph "Quality & Security Gates"
-        C --> D[SonarQube Scan]
-        D --> E[OWASP Dependency Check]
-        E --> F[Trivy Security Scan]
-    end
-    
-    F --> G{Checks Passed?}
-    G -->|Yes| H[Docker Compose Build]
-    G -->|No| I[Pipeline Fail & Notify]
-    
-    H --> J[Deploy Containers]
-    
-    subgraph "Production Environment"
-        J --> K[Frontend - Port 3001]
-        J --> L[Backend - Port 5002]
-        L --> M[(MongoDB)]
-        L --> N[(Redis Cache)]
-    end
-```
+![Wanderlust Project Workflow](./workflow-animation.svg)
 
 ### 🚀 Workflow Steps:
 1.  **Code Commit**: Developers push changes to the GitHub repository.
