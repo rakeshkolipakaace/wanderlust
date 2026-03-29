@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "5001:5001"
     environment:
-      - PORT=5000
+      - PORT=5001
       - MONGODB_URI=mongodb://mongodb:27017/wanderlust
       - REDIS_URL=redis://redis:6379
     depends_on:
@@ -25,7 +23,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_PATH=http://localhost:5000
+        - VITE_API_PATH=http://backend:5001
     ports:
       - "3000:80"
     depends_on:

@@ -15,7 +15,7 @@ WORKDIR /app
 
 COPY --from=backend-builder /app .
 
-EXPOSE 5000
+EXPOSE 5001
 
 # App
 CMD ["node", "server.js"]

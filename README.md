@@ -56,6 +56,8 @@ _I'd love for you to make the most of this project - it's all about learning, he
    cp .env.sample .env
    ```
 
+   > **Important**: For detailed environment setup instructions, including port configurations and troubleshooting, please refer to [SETUP.md](./SETUP.md).
+
 7. **Start the Backend Server**
 
    ```bash
@@ -65,7 +67,7 @@ _I'd love for you to make the most of this project - it's all about learning, he
    > You should see the following on your terminal output on successful setup.
    >
    > ```bash
-   > [BACKEND] Server is running on port 5000
+   > [BACKEND] Server is running on port 5001
    > [BACKEND] Database connected: mongodb://127.0.0.1/wanderlust
    > ```
 
@@ -86,8 +88,10 @@ _I'd love for you to make the most of this project - it's all about learning, he
 3. **Configure Environment Variables**
 
    ```bash
-   cp .env.sample .env.local
+   cp .env.sample .env
    ```
+
+   > **Important**: Ensure the `VITE_API_PATH` is set to `http://localhost:5001` to match the backend port. Refer to [SETUP.md](./SETUP.md) for complete configuration details.
 
 4. **Launch the Development Server**
 

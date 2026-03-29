@@ -67,3 +67,26 @@ npm run start-frontend
 - Posts must have `isFeaturedPost: true` to appear in featured section
 - Use the checkbox "Is this a featured blog?" when creating posts
 - Existing posts can be updated via PATCH request to set `isFeaturedPost: true`
+
+## Docker Setup
+
+### Using Docker Compose
+```bash
+docker-compose up -d
+```
+
+### Docker Environment Variables
+- **Backend**: Uses port 5001 inside containers
+- **Frontend**: Uses `http://backend:5001` to connect to backend in Docker network
+- **External Access**: Backend available on `localhost:5001`, Frontend on `localhost:3000`
+
+### Docker Services
+- **Backend**: Node.js server with MongoDB and Redis connections
+- **Frontend**: Nginx serving built React application
+- **MongoDB**: Data persistence with volume mounting
+- **Redis**: Caching service
+
+### Docker Troubleshooting
+- Ensure Docker is running and ports 5001, 3000, 27017, 6379 are available
+- Use `docker-compose logs` to check service logs
+- Use `docker-compose down -v` to clean up volumes if needed
