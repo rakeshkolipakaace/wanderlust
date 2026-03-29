@@ -115,10 +115,7 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const apiUrl = import.meta.env.VITE_API_PATH + '/api/posts/';
-        console.log('Attempting to connect to:', apiUrl);
-
-        const response = await axios.post(apiUrl, formData, {
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData, {
           timeout: 10000, // 10 second timeout
           headers: {
             'Content-Type': 'application/json'
